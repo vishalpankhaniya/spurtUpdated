@@ -14,13 +14,13 @@ module.exports.orderCheckout = (req, res, next) => {
         shippingCity: Joi.string().required(),
         shippingCountry: Joi.string().required(),
         shippingFirstName: Joi.string().required(),
-        shippingLastName: Joi.string().required(),
+        shippingLastName: Joi.string(),
         shippingPostCode: Joi.number().required(),
         shippingZone: Joi.string().required(),
         shippingCompany: Joi.string(),
         shippingAddressFormat: Joi.any(),
         productDetails: Joi.array().required(),
-        emailId: Joi.string().required(),
+        emailId: Joi.string().required()
     });
 
     Joi.validate(
