@@ -99,11 +99,22 @@ module.exports.editProfile = (req, res, next) => {
     console.log("Edit profile called");
     const schema = Joi.object().keys({
 
+        // image: Joi.any(),
+        // firstName: Joi.string(),
+        // lastName: Joi.string(),
+        // emailId: Joi.string().required(),
+        // phoneNumber: Joi.number().required(),
+
         image: Joi.any(),
         firstName: Joi.string(),
-        lastName: Joi.string(),
+        zoneId: Joi.string().required(),
+        pincode: Joi.number().required(),
+        countryId: Joi.string().required(),
         emailId: Joi.string().required(),
         phoneNumber: Joi.number().required(),
+        address: Joi.string().required(),
+
+
     });
 
     Joi.validate(

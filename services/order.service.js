@@ -129,6 +129,9 @@ module.exports.orderList = (orderData) => {
 module.exports.orderListById = (orderId) => {
     return new Promise((resolve, reject) => {
 
+
+        console.log('OrderId------------------', orderId);
+
         order.aggregate([
             {
                 $match: { '_id': ObjectId(orderId) }
@@ -375,7 +378,7 @@ module.exports.myOrderList = (orderData) => {
             {
                 $project: {
                     orderId: '$_id',
-                    OrderId:'$orderId',
+                    OrderId: '$orderId',
                     total: '$total',
                     createdDate: '$created_date',
                     customerId: '$customer_id',
@@ -396,7 +399,7 @@ module.exports.myOrderList = (orderData) => {
             {
                 $project: {
                     orderId: 1,
-                    OrderId:1,
+                    OrderId: 1,
                     total: 1,
                     createdDate: 1,
                     customerId: 1,
@@ -580,10 +583,10 @@ module.exports.todayOrderAmount = () => {
 
                     return resolve({ status: 200, message: 'Successfully show the Order List..!!', data: 0 });
                 }
-                else{
+                else {
                     return resolve({ status: 200, message: 'Successfully show the Order List..!!', data: orderDetail[0].total });
                 }
-               
+
             }
         })
     })
@@ -636,7 +639,7 @@ module.exports.salesList = () => {
 module.exports.myOrderDetail = (orderId) => {
     return new Promise((resolve, reject) => {
 
-        console.log("Order Id------->>",orderId);
+        console.log("Order Id------->>", orderId);
 
         order.aggregate([
             {
@@ -747,6 +750,23 @@ module.exports.myOrderDetail = (orderId) => {
                 $unwind: '$productList.productDetail'
             },
             {
+                $lookup: {
+                    from: 'product_image',
+                    localField: 'productList.productId',
+                    foreignField: 'product_id',
+                    as: 'productList.productDetail.Images'
+                }
+            },
+            {
+                $unwind: {
+                    path: '$productList.productDetail.Images',
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+            {
+                $match: { 'productList.productDetail.Images.default_image': 1 }
+            },
+            {
                 $group: {
                     _id: '$_id',
                     paymentAddress1: {
@@ -829,13 +849,12 @@ module.exports.myOrderDetail = (orderId) => {
                     }
                 }
             }
-        ])
-            .exec(function (error, productDetail) {
-                if (error) {
-                    return reject(error);
-                } else {
-                    return resolve({ status: 200, message: 'Successfully get order list', data: productDetail });
-                }
-            })
+        ]).exec(function (error, productDetail) {
+            if (error) {
+                return reject(error);
+            } else {
+                return resolve({ status: 200, message: 'Successfully get order list', data: productDetail });
+            }
+        })
     })
 }

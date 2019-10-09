@@ -315,7 +315,6 @@ module.exports.deleteAddress = (req, res) => {
 
 module.exports.editProfile = (req, res) => {
 
-	console.log('Request.body:', req.body);
 
 	const path = 'customer/';
 

@@ -30,8 +30,6 @@ const wishListController = require('./controller/customerwishlist.controller');
 const stockStatusController = require('./controller/stockStatus.controller');
 const sellerController = require('./controller/seller.controller');
 
-
-
 //Define Validation Here
 
 const productValidation = require('./validation/product.validation');
@@ -165,7 +163,6 @@ app.put('/api/product-store/update-featureproduct/:id', productController.update
 //Routes for Customer API
 
 app.delete('/api/customer/delete-customer/:id', customerController.deleteCustomer);
-
 app.get('/api/auth/userlist', authController.userList);
 app.get('/api/role/rolelist', authController.roleList);
 app.get('/api/customer/customer-details/:id', customerController.customerDetails);

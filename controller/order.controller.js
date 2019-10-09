@@ -51,7 +51,7 @@ module.exports.myOrderDetail = (req, res) => {
 
 	const orderId = req.query.orderId;
 
-	console.log("Order Id in controller",orderId);
+	console.log("Order Id in controller", orderId);
 
 	orderService.myOrderDetail(orderId).then((response) => {
 		return res.status(200).json({ status: 1, message: response.message, data: response.data });
@@ -76,22 +76,19 @@ module.exports.orderCheckout = (req, res) => {
 
 	let productDetailData = [];
 
-	console.log("+++++++++++++++++++++++++++++",JSON.parse(req.body.productDetails));
+	console.log('Req.body------------->>>>>>>>>>>', req.body);
 
-	_.forEach(JSON.parse(req.body.productDetails), (product) => {
-		console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&",Number (product.price))
-		let decodedPrice = Number(product.price);
-		let decodedQuantity = Number(product.quantity);
+	_.forEach(req.body.productDetails, (product) => {
+		let decodedPrice = product.price;
+		let decodedQuantity = product.quantity;
 		let productInformatiomData = {
 			productInformatiomData: {
 				name: product.name,
 				model: product.model,
-				quantity:product.quantity,
+				quantity: product.quantity,
 				total: decodedPrice * decodedQuantity
 			}
 		}
-
-		console.log(">>>>>>>>>>>>>>>",productInformatiomData);
 
 		productDetailData.push(productInformatiomData);
 	})
@@ -105,9 +102,9 @@ module.exports.orderCheckout = (req, res) => {
 
 	customerService.getProfile(authorization).then((response) => {
 
-		_.forEach(JSON.parse(req.body.productDetails), (product) => {
-			total = Number (product.price) * Number(product.quantity);
-			totalAmount = totalAmount + total;			
+		_.forEach(req.body.productDetails, (product) => {
+			total = product.price * product.quantity;
+			totalAmount = totalAmount + total;
 		})
 
 		let randomNumber = Math.floor(100000000 + Math.random() * 900000000);
@@ -135,7 +132,7 @@ module.exports.orderCheckout = (req, res) => {
 			created_date: moment().format('YYYY-MM-DD')
 		}
 
-		console.log("orderData =======================>" ,orderData);
+		console.log("orderData =======================>", orderData);
 
 		let message = "Dear " + req.body.shippingFirstName + " " + req.body.shippingLastName + ",        </td>    </tr>    <tr>        <td dir='ltr' style='padding:0 0px;color:#078e05;font-weight:400;text-align:left;font-size:16px;line-height:1.5rem;padding-top:10px;font-family: 'Roboto', sans-serif;' valign='top'> Order successfully placed.        </td>    </tr>    <tr>        <td dir='ltr' style='padding:0 0px;color:#000;font-weight:300;text-align:left;font-size:12px;line-height:1.2rem;padding-top:10px;font-family: 'Roboto', sans-serif;' valign='top'> You have successfully placed an order for customization services. Kindly find the following details on the placed order.    </tr></tbody></table></td></tr>\r\n";
 
@@ -179,7 +176,12 @@ module.exports.orderCheckout = (req, res) => {
 
 module.exports.myOrderList = (req, res) => {
 	const authorization = req.header('authorization');
+
+	console.log('Authorization:', authorization);
+
 	customerService.getProfile(authorization).then((response) => {
+
+		console.log('Response-------------:', response);
 
 		const orderData = {
 			customer_id: response.data._id,

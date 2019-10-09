@@ -163,7 +163,7 @@ module.exports.customerList = (customerData) => {
             });
         }
         else {
-            
+
             var email = customerData.email;
             var name = customerData.name;
             var date = customerData.date;
@@ -223,7 +223,7 @@ module.exports.getProfile = (authorization) => {
         jwt.verify(authorization, 'pmt', function (err, decoded) {
             if (err) throw err;
 
-            console.log("decode",decoded);
+            console.log("decode", decoded);
 
             const customerId = decoded.customer._id;
             customer.aggregate([

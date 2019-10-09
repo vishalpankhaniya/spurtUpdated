@@ -48,8 +48,6 @@ module.exports.categoryList = (categoryData) => {
                     console.log('error: ', Error);
                     reject({ status: 500, message: 'Internal Server Error' });
                 } else {
-                    console.log('categoryData: ', categoryData);
-
                     var finalCategory = [];
 
 
@@ -191,16 +189,16 @@ module.exports.categoryByList = (categoryData) => {
                 aggregate.push({ $skip: categoryData.offset });
             }
 
-           
+
             if (categoryData.sortOrder == 1) {
 
-                console.log("Sort Order 1:",categoryData.sortOrder);
+                console.log("Sort Order 1:", categoryData.sortOrder);
 
                 aggregate.push({ $sort: { sort_order: 1 } });
             }
 
             if (categoryData.sortOrder == 2) {
-                console.log("Sort Order 2:",categoryData.sortOrder);
+                console.log("Sort Order 2:", categoryData.sortOrder);
 
                 aggregate.push({ $sort: { sort_order: -1 } });
             }

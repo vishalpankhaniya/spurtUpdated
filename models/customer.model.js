@@ -36,50 +36,52 @@ var customer = new mongoose.Schema({
 		type: Number
 	},
 	avatar: {
-		type: String
+		type: String,
+		default: " ",
 	},
 	avatar_path: {
-		type: String
+		type: String,
+		default: " ",
 	},
 	mail_status: {
-		type:Number
+		type: Number
 	},
 	delete_flag: {
 		type: String
 	},
-	last_login:{
-		type:Date
+	last_login: {
+		type: Date
 	},
-	newsletter:{
-		type:Number
+	newsletter: {
+		type: Number
 	},
-	safe:{
-		type:String
+	safe: {
+		type: String
 	},
-	ip:{
-		type:String
+	ip: {
+		type: String
 	},
-	zone_id:{
-		type:mongoose.Schema.Types.ObjectId,
-		ref:'zone'
+	zone_id: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'zone'
 	},
-	isActive:{
-		type:Number
+	isActive: {
+		type: Number
 	},
-	created_by:{
-		type:String,
-		default:null
+	created_by: {
+		type: String,
+		default: null
 	},
-	modified_by:{
-		type:String,
-		default:null
+	modified_by: {
+		type: String,
+		default: null
 	},
-	created_date:{
-		type:String
+	created_date: {
+		type: String
 	},
-	modified_date:{
-		type:Date,
-		default:Date.now()
+	modified_date: {
+		type: Date,
+		default: Date.now()
 	}
 });
 
